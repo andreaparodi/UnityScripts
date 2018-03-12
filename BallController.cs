@@ -11,21 +11,24 @@ public class BallController : MonoBehaviour {
 	public float vertSpeed;
 
 	private int horMovDir;
-
 	public bool onGround;
 
 	public Transform ballBottomPoint;
 	public float radius;
 	public LayerMask groundLevel;
 
+	public bool isPressingD;
+	public bool isPressingA;
+
 	void Start () 
 	{
+		isPressingA = false;
+		isPressingD = false;
 		horMovDir = 0;
 		ballRigidBody=GetComponent<Rigidbody2D>();
 	}
 	void Update () 
 	{
-		
 	}
 	void FixedUpdate()
 	{
@@ -48,16 +51,25 @@ void checkControls()
 				force.y = 0;
 			}
 		}
-		if (Input.GetKey (KeyCode.A)) 
-		{
+		if (Input.GetKey (KeyCode.A)) {
 			//Debug.Log ("left");
 			horMovDir = -1;
+			isPressingA = true;
 		}
-		if (Input.GetKey (KeyCode.D)) 
+		else 
 		{
+			isPressingA = false;
+		}
+		if (Input.GetKey (KeyCode.D)) {
 			//Debug.Log ("right");
 			horMovDir = 1;
+			isPressingD = true;
 		}
+		else 
+		{
+			isPressingD = false;
+		}
+
 		force.x = horSpeed * horMovDir;
 		ballRigidBody.AddForce (force);
 		//newVel.x = horSpeed * horMovDir;
